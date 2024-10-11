@@ -19,60 +19,28 @@ public class LionTest {
         MockitoAnnotations.openMocks(this); // Инициализация моков
     }
     @Test
-    public void testGetKittens() {
-        // Arrange
+    public void testGetKittens() throws Exception {
         when(mockFeline.getKittens()).thenReturn(3); // Задаем поведение мока
-        // Act
-        Lion lion = null;
-        try {
-            lion = new Lion("Самец", mockFeline); // Создание объекта Lion
-        } catch (Exception e) {
-            fail("Исключение было выброшено неожиданно");
-        }
-        int kittens = lion.getKittens(); // Получение количества детенышей
-        // Assert
-        assertEquals(3, kittens); // Проверка ожидаемого результата
+        Lion lion = new Lion("Самец", mockFeline);
+        int kittens = lion.getKittens();
+        assertEquals(3, kittens);
     }
     @Test
-    public void testDoesHaveMane() {
+    public void testDoesHaveMane() throws Exception {
         // Act
-        Lion lionMale = null;
-        Lion lionFemale = null;
-        try {
-            lionMale = new Lion("Самец", mockFeline); // Создание самца
-            lionFemale = new Lion("Самка", mockFeline); // Создание самки
-        } catch (Exception e) {
-            fail("Неожиданно возникло исключение");
-        }
-        // Assert
+        Lion lionMale = new Lion("Самец", mockFeline); // Создание самца
+        Lion lionFemale = new Lion("Самка", mockFeline); // Создание самки
         assertTrue(lionMale.doesHaveMane()); // Проверка наличия гривы у самца
         assertFalse(lionFemale.doesHaveMane()); // Проверка отсутствия гривы у самки
     }
 
     /** Тест метода getFood().*/
     @Test
-    public void testGetFood() {
-        // Arrange
+    public void testGetFood() throws Exception {
         List<String> expectedFood = Arrays.asList("Мясо", "Рыба");
-        try {
-            when(mockFeline.getFood("Хищник")).thenReturn(expectedFood); // Задаем поведение мока
-        } catch (Exception e) {
-            fail("Неожиданно возникло исключение");
-        }
-        // Act
-        Lion lion = null;
-        try {
-            lion = new Lion("Самец", mockFeline); // Создание объекта Lion
-        } catch (Exception e) {
-            fail("Неожиданно возникло исключение");
-        }
-        List<String> food = null;
-        try {
-            food = lion.getFood(); // Получение списка пищи
-        } catch (Exception e) {
-            fail("Неожиданно возникло исключение");
-        }
-        // Assert
+        when(mockFeline.getFood("Хищник")).thenReturn(expectedFood); // Задаем поведение мока
+        Lion lion = new Lion("Самец", mockFeline); // Создание объекта Lion
+        List<String> food = lion.getFood(); // Получение списка пищи
         assertNotNull(food); // Проверка, что список пищи не null
         assertEquals(expectedFood, food); // Проверка соответствия ожидаемых и полученных данных
     }
